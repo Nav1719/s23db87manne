@@ -1,11 +1,4 @@
-# s23wb87manne
+# s23db87manne
 
-This is Assignment 10
+This is Assignment 11
 
-This is render server link <https://s23wb87manne.onrender.com/>
-
-### Class details:
-Glass
-glass_name - string
-quantity - number
-resistance - string
