@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  - let results=[{glass_name:"Borosilicate",quantity:2,resistance:"Thermal resistance"},{glass_name:"Pyrex",quantity:5,resistance:"Heat resistance"},{glass_name:"Asbestos",quantity:3,resistance:"cold resistance"}]
+  div(class="container-fluid")
+  div(class="row")
+  each value,index in results
+    div(class="col-sm-2" onclick=`buy(${index})`)  #{value.glass_name} Glass, quantity is #{value.quantity}, with #{value.resistance}
+  script. 
+    function buy(index)
+    {
+      alert(`You purchased Item ${index+1}`)
+    } 
