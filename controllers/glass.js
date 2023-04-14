@@ -21,10 +21,17 @@ exports.glass_list = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
-// for a specific Glass.
-exports.glass_detail = function(req, res) {
- res.send('NOT IMPLEMENTED: Glass detail: ' + req.params.id);
-};
+// for a specific Costume.
+exports.glass_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Glass.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+   };
 // Handle Glass create on POST.
 exports.glass_create_post = async function(req, res) {
     console.log(req.body)
@@ -50,6 +57,22 @@ exports.glass_delete = function(req, res) {
  res.send('NOT IMPLEMENTED: Glass delete DELETE ' + req.params.id);
 };
 // Handle Glass update form on PUT.
-exports.glass_update_put = function(req, res) {
- res.send('NOT IMPLEMENTED: Glass update PUT' + req.params.id);
+exports.glass_update_put = async function(req, res) {
+ console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+ try {
+ let toUpdate = await Glass.findById( req.params.id)
+ // Do updates of properties
+ if(req.body.glass_name)
+ toUpdate.glass_name = req.body.glass_name;
+ if(req.body.quantity) toUpdate.quantity = req.body.quantity;
+ if(req.body.resistance) toUpdate.resistance = req.body.resistance;
+ let result = await toUpdate.save();
+ console.log("Sucess " + result)
+ res.send(result)
+ } catch (err) {
+ res.status(500)
+ res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+ }
 };
