@@ -70,18 +70,18 @@ async function recreateDB(){
  Costume({glass_name:"Pyrex", quantity:68, resistance:"Heat resistance"});
  let instance3 = new
  Costume({glass_name:"Asbestos", quantity:76, resistance:"cold resistance"});
- instance1.save(function (err,doc) {
- if(err) return console.error(err);
- console.log("First object saved")
- });
- instance2.save( function (err,doc) {
-  if(err) return console.error(err);
-  console.log("Second object saved")
-  });
-  instance3.save( function (err,doc) {
-    if(err) return console.error(err);
-    console.log("Third object saved")
-    });
+ instance1.save().then(doc=>{
+      console.log("First object saved");}
+      ).catch(err=>{
+      console.error(err);});
+    instance2.save().then(doc=>{
+        console.log("Second object saved");}
+        ).catch(err=>{
+        console.error(err);});
+    instance3.save().then(doc=>{
+          console.log("Third object saved");}
+          ).catch(err=>{
+          console.error(err);});
 }
 let reseed = true;
 if (reseed) { recreateDB();}
