@@ -52,10 +52,18 @@ exports.glass_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
-// Handle Glass delete form on DELETE.
-exports.glass_delete = function(req, res) {
- res.send('NOT IMPLEMENTED: Glass delete DELETE ' + req.params.id);
-};
+// Handle Costume delete on DELETE.
+exports.glass_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await Glass.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+   };
 // Handle Glass update form on PUT.
 exports.glass_update_put = async function(req, res) {
  console.log(`update on id ${req.params.id} with body
