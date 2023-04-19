@@ -1,0 +1,26 @@
+extends layout
+
+block content
+ h1(class='detail')= title
+
+  if (toShow==null)
+   h2 No Instance to detail
+  else
+   - let glassid = toShow._id 
+   - let glass_name = toShow.glass_name 
+   - let quantity = toShow.quantity 
+   - let resistance = toShow.resistance
+    div 
+    div.row 
+      div(class='glassAttr mr-3') Glass id is: 
+      div #{glassid}
+       
+    div.row 
+      div(class='glassAttr mr-3') glass_name is: 
+      div #{glass_name} 
+    div.row 
+      div(class='glassAttr mr-3')  quantity is: 
+      div #{quantity} 
+    div.row 
+      div(class='glassAttr mr-3') resistance is: 
+      div #{resistance} 

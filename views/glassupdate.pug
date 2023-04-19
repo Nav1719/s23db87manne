@@ -1,0 +1,46 @@
+extends layout
+
+block content
+    h1(class='bonus')= title
+
+    if (toShow == null)
+        h2 No instance to update
+    else
+        - let glassid = toShow._id
+        - let glass_name = toShow.glass_name
+        - let quantity = toShow.quantity
+        - let resistance = toShow.resistance
+
+
+          div.row(class='glassAttr mb-2')
+            div.mr-1 ID is
+            div #{glassid}
+        - let actionid = "/resource/glasses/"+glassid
+        form(id='glassForm', action= actionid, method="PUT")
+          div.form-group
+            label.glassAttr(for='glass_name') Glass Name
+            input#glass_name(type='text' name='glass_name', value= glass_name )
+          div.form-group
+            label.glassAttr(for='quantity') Glass quantity
+            input#quantity(type='number' name='quantity', value= quantity )
+          div.form-group
+            label.glassAttr(for='resistance') Glass resistance
+            input#resistance(type='text' name='resistance', value= resistance )
+          input(type="submit")
+        script.
+          document.forms['glassForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+                // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+             method: 'PUT',
+             body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+             return resp.json(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+             alert("Update succeded")
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+             alert("Update failed " + error )
+            });
+          });

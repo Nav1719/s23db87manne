@@ -1,9 +1,9 @@
 var Glass = require('../models/glass');
-// List of all Costumes
+// List of all Glasss
 exports.glass_list = async function(req, res) {
     try{
-    theCostumes = await Glass.find();
-    res.send(theCostumes);
+    theGlasss = await Glass.find();
+    res.send(theGlasss);
     }
     catch(err){
     res.status(500);
@@ -13,15 +13,15 @@ exports.glass_list = async function(req, res) {
    //Views and Handle a how all view
    exports.glass_view_all_Page = async function(req, res) {
     try{
-    theCostumes = await Glass.find();
-    res.render('glass', { title: 'Glass Search Results', results: theCostumes });
+    theGlasss = await Glass.find();
+    res.render('glass', { title: 'Glass Search Results', results: theGlasss });
     }
     catch(err){
     res.status(500);
     res.send(`{"error": ${err}}`);
     }
    };
-// for a specific Costume.
+// for a specific Glass.
 exports.glass_detail = async function(req, res) {
     console.log("detail" + req.params.id)
     try {
@@ -52,7 +52,7 @@ exports.glass_create_post = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
    };
-// Handle Costume delete on DELETE.
+// Handle Glass delete on DELETE.
 exports.glass_delete = async function(req, res) {
     console.log("delete " + req.params.id)
     try {
@@ -66,8 +66,7 @@ exports.glass_delete = async function(req, res) {
    };
 // Handle Glass update form on PUT.
 exports.glass_update_put = async function(req, res) {
- console.log(`update on id ${req.params.id} with body
-${JSON.stringify(req.body)}`)
+ console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
  try {
  let toUpdate = await Glass.findById( req.params.id)
  // Do updates of properties
@@ -84,3 +83,56 @@ ${JSON.stringify(req.body)}`)
 failed`);
  }
 };
+// Handle a show one view with id specified by query
+exports.glass_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await Glass.findById( req.query.id)
+    res.render('glassdetail',
+   { title: 'Glass Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+
+   // Handle building the view for creating a Glass.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.glass_create_Page = function(req, res) {
+    console.log("create view")
+    try{
+    res.render('glasscreate', { title: 'Glass Create'});
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+// Handle building the view for updating a glass.
+// query provides the id
+exports.glass_update_Page = async function(req, res) {
+    console.log("update view for item "+req.query.id)
+    try{
+    let result = await Glass.findById(req.query.id)
+    res.render('glassupdate', { title: 'Glass Update', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
+   // Handle a delete one view with id from query
+exports.glass_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await Glass.findById(req.query.id)
+    res.render('glassdelete', { title: 'Glass Delete', toShow:
+   result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
