@@ -13,7 +13,7 @@ quantity: {
         validator:function(value){
             return "Quantity must be between 1 to 100 and no negatives values "
         },
-        message: props => `${props.value} is not within the limit`
+        message: error1 => `${error1.value} is not within the limit`
     }
 
 },
